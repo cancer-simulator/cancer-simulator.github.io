@@ -35,12 +35,12 @@ Starters = [
 		
 		if (Player.age > Events.rnd(500)) {
 			will = Player.granny * 10
-			UI.notifyNegative('Your lovely granny Toriel left the world. Got $' + Player.granny + ' as her will.')
+			UI.notifyNegative('Your loving granny Toriel left the world. Got $' + Player.granny + ' as her will.')
 			Player.savings += will
 			Player.granny = 0
 			return 1
 		} else {
-			UI.notifyPositive('Your lovely granny Toriel sent you $' + Player.granny + '.')
+			UI.notifyPositive('Your loving granny Toriel sent you $' + Player.granny + '.')
 			Player.savings += Player.granny
 			Player.granny *= 2
 		}

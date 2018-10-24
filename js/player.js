@@ -3,7 +3,7 @@ Player = {}
 Player.init = function() {
 	this.male = (Math.random() < 0.6) ? 0 : 1
 	UI.notifyPositive('A nice ' +
-		((this.male) ? 'boy' : 'girl') + ' is born. ')
+		((this.male) ? 'boy' : 'girl') + ' is born. <a>Restart</a>?')
 	this.age = 0
 	this.health = 100
 	this.hormone = 30

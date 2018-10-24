@@ -3,17 +3,28 @@ Game = {}
 Game.SLOW_TIME_MS = 1000
 Game.FAST_TIME_MS = 4
 
-function updateGame() {
-	if (Game.update()) return 1
+function updateGame() {	
+	ms = Game.SLOW_TIME_MS
 	
-    ms = Events.generate() ? Game.SLOW_TIME_MS : Game.FAST_TIME_MS	
+	if (Game.active) {
+		Game.update()
+	}
+	
+	if (Game.active) {
+		if (!Events.generate()) ms = Game.FAST_TIME_MS
+	}
+	
 	setTimeout(updateGame, ms)
+}
+
+Game.restart = function() {
+    Player.init()
+	this.active = true
 }
 
 Game.init = function() {
     this.score = null
-    Player.init()
-
+	this.restart()
     updateGame()
 }
 
@@ -23,10 +34,8 @@ Game.update = function() {
     if (Player.health <= 0) {
 	// kids mechanics
         UI.notifyNegative('Died. <a>Restart</a>?')
-        return 1
+		this.active = false
     }
-
-	return 0
 }
 
 Game.init()
