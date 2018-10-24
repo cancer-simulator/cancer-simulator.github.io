@@ -8,8 +8,9 @@ Player.init = function() {
 	this.health = 100
 	this.hormone = 30
 	this.adolescenceStage = 0
-	this.savings = 0.001
+	this.savings = 0
 	this.granny = 10
+	this.extortion = 1
 }
 
 Player.update = function() {

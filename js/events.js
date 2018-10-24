@@ -22,11 +22,11 @@ Starters = [
 	},
 	
 	function() {
-		msg = ['Started paying attention to other teens.', 'Visited a school party and danced.', 'Bed.']
+		var msg = ['Started paying attention to other teens.', 'Visited a school party and danced.', 'Bed.']
 		if (Player.age < 10 || Player.age > 15) return 0
 		UI.notifyPositive(msg[Player.adolescenceStage])
-		if (Player.adolescenceStage < msg.length - 1) Player.adolescenceStage += 1
 		Player.hormone += 30
+		if (Player.adolescenceStage < msg.length - 1) Player.adolescenceStage++
 		return 1
 	},
 	
@@ -42,8 +42,27 @@ Starters = [
 		} else {
 			UI.notifyPositive('Your loving granny Toriel sent you $' + Player.granny + '.')
 			Player.savings += Player.granny
-			Player.granny *= 2
+			Player.granny += 10
 		}
+		return 1
+	},
+	
+	function() {
+		if (!Player.extortion) return 0
+		if (Player.age > 18 || Player.age < 6) return 0
+		
+		Player.extortion++
+
+		if (Math.random() < 0.5 || Player.extortion < 3 || Player.age < 12) {
+			UI.notifyNegative('Squall and Seifer stopped you and demanded your pocket money. You submitted.')
+			Player.savings = Player.savings * 0.99 - 10
+			if (Player.savings < 0) Player.savings = 0
+			return 1
+		}
+		
+		Player.extortion = 0
+		Player.savings *= 0.99
+		UI.notifyNegative(Events.arnd(['Squall attempted to extort money from you and you killed him with a lead pipe. Hiding the body costed you.', 'You bribed Selphie into killing Seifer. This costed you.', 'Squall was killed in a school gunfight.']))
 		return 1
 	}
 ]
@@ -51,10 +70,10 @@ Starters = [
 Events.generate = function() {
 	if (Math.random() < 0.1) return 0
 	if (Followups.length) {
-		e = Followups.splice(rnd(Followups.length), 1)
+		var e = Followups.splice(rnd(Followups.length), 1)
 		return e[0]()
 	}
-	if (Math.random() < 0.95) return 0
-	
+	if (Math.random() < 0.99) return 0
+
 	return this.arnd(Starters)()
 }

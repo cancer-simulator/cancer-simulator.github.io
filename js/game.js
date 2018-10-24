@@ -1,6 +1,6 @@
 Game = {}
 
-Game.SLOW_TIME_MS = 1000
+Game.SLOW_TIME_MS = 100
 Game.FAST_TIME_MS = 4
 
 function updateGame() {	
